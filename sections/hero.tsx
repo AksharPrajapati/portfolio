@@ -1,0 +1,309 @@
+"use client";
+
+import { ButtonLink } from "../components/ui/button";
+import { Container } from "../components/ui/container";
+import { Text } from "../components/ui/typography";
+import { heroContent, siteConfig } from "../data/site";
+import { cn } from "../lib/utils";
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowDown, Download, Mail, type LucideIcon } from "lucide-react";
+import { useEffect, useState } from "react";
+
+function GitHubIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={className}
+      aria-hidden
+    >
+      <path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.021C22 6.484 17.522 2 12 2Z" />
+    </svg>
+  );
+}
+
+function LinkedInIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={className}
+      aria-hidden
+    >
+      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+    </svg>
+  );
+}
+
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1, delayChildren: 0.05 },
+  },
+};
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 },
+};
+
+const socialIcons: Record<
+  (typeof heroContent.socials)[number]["icon"],
+  LucideIcon | typeof GitHubIcon
+> = {
+  github: GitHubIcon,
+  linkedin: LinkedInIcon,
+  mail: Mail,
+};
+
+function HeroBackground() {
+  const reduceMotion = useReducedMotion();
+
+  return (
+    <div
+      aria-hidden
+      className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+    >
+      <div className="absolute inset-0 bg-background" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_55%_at_50%_0%,color-mix(in_oklab,var(--accent)_22%,transparent),transparent_65%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_50%_100%,color-mix(in_oklab,#6366f1_12%,transparent),transparent)]" />
+      <motion.div
+        className="absolute left-1/2 top-[38%] size-[min(90vw,32rem)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/[0.07] blur-3xl"
+        animate={
+          reduceMotion ? undefined : { opacity: [0.35, 0.55, 0.35], scale: [1, 1.04, 1] }
+        }
+        transition={
+          reduceMotion
+            ? undefined
+            : { duration: 10, repeat: Infinity, ease: "easeInOut" }
+        }
+      />
+      <div
+        className="absolute inset-0 opacity-[0.35]"
+        style={{
+          backgroundImage:
+            "linear-gradient(color-mix(in oklab, var(--border) 55%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in oklab, var(--border) 55%, transparent) 1px, transparent 1px)",
+          backgroundSize: "64px 64px",
+          maskImage:
+            "radial-gradient(ellipse 70% 60% at 50% 40%, black 15%, transparent 75%)",
+        }}
+      />
+      <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-border/80 to-transparent" />
+    </div>
+  );
+}
+
+function HeroAvatar() {
+  const initials = siteConfig.name
+    .split(" ")
+    .map((part) => part[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+
+  return (
+    <div className="relative mx-auto size-24 sm:size-28">
+      <div
+        aria-hidden
+        className="absolute inset-0 rounded-full bg-gradient-to-br from-accent/40 via-accent/10 to-transparent blur-md"
+      />
+      <div
+        aria-hidden
+        className="absolute -inset-1 rounded-full border border-accent/20"
+      />
+      <div
+        className="relative flex size-full items-center justify-center rounded-full border border-border/80 bg-card/80 text-lg font-semibold tracking-tight text-foreground shadow-[0_0_40px_-12px] shadow-accent/30 backdrop-blur-sm sm:text-xl"
+        role="img"
+        aria-label={`${siteConfig.name} avatar`}
+      >
+        {initials}
+      </div>
+    </div>
+  );
+}
+
+function RoleTypewriter({ roles }: { roles: readonly string[] }) {
+  const reduceMotion = useReducedMotion();
+  const [roleIndex, setRoleIndex] = useState(0);
+  const [displayed, setDisplayed] = useState(roles[0] ?? "");
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    if (reduceMotion) {
+      setDisplayed(roles[roleIndex] ?? "");
+      return;
+    }
+
+    const current = roles[roleIndex] ?? "";
+    let timeout: ReturnType<typeof setTimeout>;
+
+    if (!isDeleting && displayed.length < current.length) {
+      timeout = setTimeout(() => {
+        setDisplayed(current.slice(0, displayed.length + 1));
+      }, 55);
+    } else if (!isDeleting && displayed.length === current.length) {
+      timeout = setTimeout(() => setIsDeleting(true), 2200);
+    } else if (isDeleting && displayed.length > 0) {
+      timeout = setTimeout(() => {
+        setDisplayed(current.slice(0, displayed.length - 1));
+      }, 32);
+    } else {
+      setIsDeleting(false);
+      setRoleIndex((prev) => (prev + 1) % roles.length);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [displayed, isDeleting, reduceMotion, roleIndex, roles]);
+
+  return (
+    <p
+      className="mt-4 font-mono text-sm text-muted sm:text-base"
+      aria-live="polite"
+      aria-atomic="true"
+    >
+      <span className="text-accent">&gt;</span>{" "}
+      <span className="text-foreground/90">{displayed}</span>
+      <span
+        className={cn(
+          "ml-0.5 inline-block w-[2px] bg-accent",
+          reduceMotion ? "opacity-80" : "animate-pulse",
+        )}
+        aria-hidden
+      >
+        &nbsp;
+      </span>
+    </p>
+  );
+}
+
+function HeroSocialLinks() {
+  return (
+    <ul className="mt-10 flex items-center justify-center gap-2">
+      {heroContent.socials.map((social) => {
+        const Icon = socialIcons[social.icon];
+
+        return (
+          <li key={social.href}>
+            <a
+              href={social.href}
+              target={social.href.startsWith("mailto") ? undefined : "_blank"}
+              rel={
+                social.href.startsWith("mailto")
+                  ? undefined
+                  : "noopener noreferrer"
+              }
+              aria-label={social.label}
+              className="group flex size-11 items-center justify-center rounded-full border border-border/70 bg-card/40 text-muted backdrop-blur-sm transition-colors duration-200 hover:border-accent/40 hover:bg-card hover:text-foreground"
+            >
+              <Icon className="size-[1.15rem] transition-transform duration-200 group-hover:scale-105" />
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
+export function HeroSection() {
+  const reduceMotion = useReducedMotion();
+
+  const itemTransition = reduceMotion
+    ? { duration: 0 }
+    : { duration: 0.55, ease: EASE };
+
+  return (
+    <section
+      id="hero"
+      aria-labelledby="hero-heading"
+      className="relative flex min-h-dvh items-center justify-center overflow-hidden pt-16 md:pt-20"
+    >
+      <HeroBackground />
+
+      <Container className="relative w-full py-16 sm:py-20">
+        <motion.div
+          className="mx-auto flex max-w-3xl flex-col items-center text-center"
+          variants={staggerContainer}
+          initial="hidden"
+          animate="visible"
+        >
+          <motion.div variants={fadeUp} transition={itemTransition}>
+            <HeroAvatar />
+          </motion.div>
+
+          <motion.h1
+            id="hero-heading"
+            variants={fadeUp}
+            transition={itemTransition}
+            className="mt-8 text-balance text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl"
+          >
+            <span className="text-foreground">{heroContent.greeting} </span>
+            <span className="bg-gradient-to-r from-sky-400 via-accent to-indigo-400 bg-clip-text text-transparent">
+              {siteConfig.name}
+            </span>
+          </motion.h1>
+
+          <motion.div variants={fadeUp} transition={itemTransition}>
+            <RoleTypewriter roles={heroContent.roles} />
+          </motion.div>
+
+          <motion.div
+            variants={fadeUp}
+            transition={itemTransition}
+            className="mt-6 max-w-xl"
+          >
+            <Text variant="body-lg" className="text-muted text-pretty" as="p">
+              {heroContent.intro}
+            </Text>
+          </motion.div>
+
+          <motion.div
+            variants={fadeUp}
+            transition={itemTransition}
+            className="mt-10 flex w-full max-w-md flex-col gap-3 sm:max-w-none sm:flex-row sm:justify-center"
+          >
+            {heroContent.ctas.map((cta) => (
+              <ButtonLink
+                key={cta.label}
+                href={cta.href}
+                variant={cta.variant}
+                external={"external" in cta ? cta.external : false}
+                className={cn(
+                  "w-full rounded-full px-6 py-3 text-sm font-medium sm:w-auto",
+                  cta.variant === "primary" &&
+                    "border-0 bg-gradient-to-r from-sky-500 to-indigo-500 text-white shadow-lg shadow-sky-500/20 hover:from-sky-400 hover:to-indigo-400 hover:text-white",
+                  cta.variant === "secondary" &&
+                    "border-border/80 bg-card/30 backdrop-blur-sm hover:bg-card/60",
+                )}
+              >
+                {cta.label}
+                {cta.icon === "arrow" ? (
+                  <ArrowDown className="size-4" />
+                ) : (
+                  <Download className="size-4" />
+                )}
+              </ButtonLink>
+            ))}
+          </motion.div>
+
+          <motion.div variants={fadeUp} transition={itemTransition}>
+            <HeroSocialLinks />
+          </motion.div>
+        </motion.div>
+
+        <motion.a
+          href="#about"
+          className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 text-muted transition-colors hover:text-foreground md:flex"
+          initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1, duration: 0.45, ease: EASE }}
+          aria-label="Scroll to about section"
+        >
+          <ArrowDown className="size-5" />
+        </motion.a>
+      </Container>
+    </section>
+  );
+}
