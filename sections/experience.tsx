@@ -1,68 +1,60 @@
 "use client";
 
-import { SectionReveal } from "../components/ui/section-reveal";
-import { SectionHeader } from "../components/ui/section-header";
+import { ExperienceCard } from "../components/experience/experience-card";
+import { SectionTitle } from "../components/ui/section-title";
 import { Container, Section } from "../components/ui/container";
-import { Text } from "../components/ui/typography";
-import { experiences, experienceContent } from "../data/experience";
+import { experienceContent, experiences } from "../data/experience";
+import { motion, useInView, useReducedMotion } from "framer-motion";
+import { useRef } from "react";
 
 export function ExperienceSection() {
-  return (
-    <Section id="experience" className="scroll-mt-24 border-t border-border/40">
-      <Container>
-        <SectionReveal>
-          <SectionHeader
-            eyebrow={experienceContent.eyebrow}
-            title={experienceContent.title}
-            description={experienceContent.description}
-          />
-        </SectionReveal>
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(timelineRef, { once: true, margin: "-80px" });
+  const reduceMotion = useReducedMotion();
 
-        <ol className="relative space-y-8 before:absolute before:inset-y-0 before:left-[7px] before:w-px before:bg-border/80 md:before:left-[11px]">
-          {experiences.map((job, index) => (
-            <SectionReveal key={job.company} delay={index * 0.06}>
-              <li className="relative pl-8 md:pl-12">
+  return (
+    <Section id="experience" className="scroll-mt-28 border-t border-border/40">
+      <Container className="max-w-4xl">
+        <motion.div
+          initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <SectionTitle
+            title={experienceContent.title}
+            subtitle={experienceContent.subtitle}
+          />
+        </motion.div>
+
+        <div ref={timelineRef} className="relative">
+          <div
+            aria-hidden
+            className="absolute top-0 bottom-0 left-4 w-px bg-gradient-to-b from-accent/50 via-accent/20 to-accent/10 md:left-8"
+          />
+
+          <ol className="space-y-8">
+            {experiences.map((job, index) => (
+              <motion.li
+                key={job.company}
+                initial={reduceMotion ? false : { opacity: 0, x: -24 }}
+                animate={isInView ? { opacity: 1, x: 0 } : {}}
+                transition={{
+                  duration: 0.6,
+                  delay: index * 0.15,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                className="relative pl-12 md:pl-20"
+              >
                 <span
                   aria-hidden
-                  className="absolute left-0 top-2 size-[15px] rounded-full border-2 border-background bg-accent shadow-[0_0_12px] shadow-accent/40 md:left-1 md:size-[19px]"
+                  className="absolute left-4 top-8 size-3 -translate-x-1/2 rounded-full bg-accent shadow-[0_0_12px] shadow-accent/60 md:left-8"
                 />
-
-                <div className="rounded-2xl border border-border/70 bg-card/30 p-6 backdrop-blur-sm md:p-8">
-                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                    <div>
-                      <h3 className="text-h3 font-semibold text-foreground">
-                        {job.role}
-                      </h3>
-                      <p className="mt-1 text-sm font-medium text-accent">
-                        {job.company}
-                      </p>
-                    </div>
-                    <div className="text-sm text-muted-foreground">
-                      <p>{job.period}</p>
-                      <p>{job.location}</p>
-                    </div>
-                  </div>
-
-                  <Text variant="muted" className="mt-4 text-pretty" as="p">
-                    {job.summary}
-                  </Text>
-
-                  <ul className="mt-4 space-y-2">
-                    {job.highlights.map((point) => (
-                      <li
-                        key={point}
-                        className="flex gap-2 text-sm text-muted"
-                      >
-                        <span className="mt-2 size-1 shrink-0 rounded-full bg-accent" />
-                        <span>{point}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </li>
-            </SectionReveal>
-          ))}
-        </ol>
+                <ExperienceCard job={job} />
+              </motion.li>
+            ))}
+          </ol>
+        </div>
       </Container>
     </Section>
   );

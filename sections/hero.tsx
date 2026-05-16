@@ -2,6 +2,7 @@
 
 import { SocialIcon, type SocialIconKey } from "../components/icons/social-icons";
 import { ButtonLink } from "../components/ui/button";
+import { SectionNavLink } from "../components/ui/section-nav-link";
 import { Container } from "../components/ui/container";
 import { Text } from "../components/ui/typography";
 import { heroContent, siteConfig } from "../data/site";
@@ -205,9 +206,7 @@ export function HeroSection() {
             className="mt-8 text-balance text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl"
           >
             <span className="text-foreground">{heroContent.greeting} </span>
-            <span className="bg-gradient-to-r from-sky-400 via-accent to-indigo-400 bg-clip-text text-transparent">
-              {siteConfig.name}
-            </span>
+            <span className="text-gradient">{siteConfig.name}</span>
           </motion.h1>
 
           <motion.div variants={fadeUp} transition={itemTransition}>
@@ -229,28 +228,41 @@ export function HeroSection() {
             transition={itemTransition}
             className="mt-10 flex w-full max-w-md flex-col gap-3 sm:max-w-none sm:flex-row sm:justify-center"
           >
-            {heroContent.ctas.map((cta) => (
-              <ButtonLink
-                key={cta.label}
-                href={cta.href}
-                variant={cta.variant}
-                external={"external" in cta ? cta.external : false}
-                className={cn(
-                  "w-full rounded-full px-6 py-3 text-sm font-medium sm:w-auto",
-                  cta.variant === "primary" &&
-                    "border-0 bg-gradient-to-r from-sky-500 to-indigo-500 text-white shadow-lg shadow-sky-500/20 hover:from-sky-400 hover:to-indigo-400 hover:text-white",
-                  cta.variant === "secondary" &&
-                    "border-border/80 bg-card/30 backdrop-blur-sm hover:bg-card/60",
-                )}
-              >
-                {cta.label}
-                {cta.icon === "arrow" ? (
-                  <ArrowDown className="size-4" />
-                ) : (
+            {heroContent.ctas.map((cta) => {
+              const buttonClass = cn(
+                "inline-flex w-full items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-colors duration-200 sm:w-auto",
+                cta.variant === "primary" &&
+                  "border-0 bg-accent-gradient text-accent-foreground shadow-accent-glow hover:shadow-accent-glow-lg",
+                cta.variant === "secondary" &&
+                  "border border-border/80 bg-card/30 backdrop-blur-sm hover:bg-card/60",
+              );
+
+              if ("sectionId" in cta) {
+                return (
+                  <SectionNavLink
+                    key={cta.label}
+                    sectionId={cta.sectionId}
+                    className={buttonClass}
+                  >
+                    {cta.label}
+                    <ArrowDown className="size-4" />
+                  </SectionNavLink>
+                );
+              }
+
+              return (
+                <ButtonLink
+                  key={cta.label}
+                  href={cta.href}
+                  variant={cta.variant}
+                  external={cta.external}
+                  className={buttonClass}
+                >
+                  {cta.label}
                   <Download className="size-4" />
-                )}
-              </ButtonLink>
-            ))}
+                </ButtonLink>
+              );
+            })}
           </motion.div>
 
           <motion.div variants={fadeUp} transition={itemTransition}>
@@ -258,16 +270,20 @@ export function HeroSection() {
           </motion.div>
         </motion.div>
 
-        <motion.a
-          href="#about"
-          className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 text-muted transition-colors hover:text-foreground md:flex"
+        <motion.div
+          className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 md:flex"
           initial={reduceMotion ? false : { opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1, duration: 0.45, ease: EASE }}
-          aria-label="Scroll to about section"
         >
-          <ArrowDown className="size-5" />
-        </motion.a>
+          <SectionNavLink
+            sectionId="about"
+            className="text-muted transition-colors hover:text-foreground"
+            aria-label="Scroll to about section"
+          >
+            <ArrowDown className="size-5" />
+          </SectionNavLink>
+        </motion.div>
       </Container>
     </section>
   );

@@ -1,39 +1,40 @@
 export const siteConfig = {
-  name: "Alex Morgan",
-  shortName: "Alex",
-  role: "Senior Fullstack Engineer",
+  name: "Akshar Prajapati",
+  shortName: "Akshar",
+  role: "Senior Software Engineer (MERN)",
   tagline:
-    "I build end-to-end web products — scalable APIs, reliable data layers, and interfaces people enjoy using.",
+    "I build scalable fullstack products — from Next.js interfaces and NestJS APIs to cloud deployments and high-performance data systems.",
   description:
-    "Portfolio of a senior fullstack engineer focused on performance, maintainability, and thoughtful UX.",
-  location: "San Francisco, CA",
+    "Portfolio of Akshar Prajapati — senior software engineer specializing in MERN stack, recruitment platforms, and production-grade web systems.",
+  location: "Ahmedabad, India",
+  phone: "+91 8980697242",
   url: "https://example.com",
   links: {
-    github: "https://github.com",
-    linkedin: "https://linkedin.com",
-    email: "mailto:hello@example.com",
+    linkedin: "https://www.linkedin.com/in/akshar-prajapati",
+    email: "mailto:aksharpp369@gmail.com",
     resume: "/resume.pdf",
   },
 } as const;
 
 export const navLinks = [
-  { href: "#home", label: "Home", id: "home" },
-  { href: "#about", label: "About", id: "about" },
-  { href: "#work", label: "Work", id: "work" },
-  { href: "#experience", label: "Experience", id: "experience" },
-  { href: "#contact", label: "Contact", id: "contact" },
+  { label: "Home", id: "home" },
+  { label: "About", id: "about" },
+  { label: "Work", id: "work" },
+  { label: "Experience", id: "experience" },
+  { label: "Contact", id: "contact" },
 ] as const;
 
 export const navSocials = [
   {
-    href: siteConfig.links.github,
-    label: "GitHub",
-    icon: "github" as const,
-  },
-  {
     href: siteConfig.links.linkedin,
     label: "LinkedIn",
     icon: "linkedin" as const,
+    external: true,
+  },
+  {
+    href: siteConfig.links.email,
+    label: "Email",
+    icon: "mail" as const,
   },
   {
     href: siteConfig.links.resume,
@@ -48,14 +49,14 @@ export const sectionIds = navLinks.map((link) => link.id);
 export const heroContent = {
   greeting: "Hi, I'm",
   roles: [
-    "Fullstack Engineer",
-    "UI Architect",
-    "Creative Developer",
+    "Senior Software Engineer",
+    "Full Stack Developer",
+    "MERN Stack Developer",
   ] as const,
   intro: siteConfig.tagline,
   ctas: [
     {
-      href: "#work",
+      sectionId: "work",
       label: "See my work",
       variant: "primary" as const,
       icon: "arrow" as const,
@@ -69,11 +70,6 @@ export const heroContent = {
     },
   ],
   socials: [
-    {
-      href: siteConfig.links.github,
-      label: "GitHub profile",
-      icon: "github" as const,
-    },
     {
       href: siteConfig.links.linkedin,
       label: "LinkedIn profile",

@@ -1,41 +1,21 @@
 export const projectsContent = {
-  eyebrow: "Work",
-  title: "Selected projects",
-  description:
-    "A few recent builds spanning developer tools, dashboards, and high-traffic consumer flows.",
+  title: "Work",
+  subtitle: "Production platforms and systems I've helped design and ship.",
 } as const;
 
 export const projects = [
   {
-    title: "Atlas Commerce Platform",
+    title: "HIRIN Recruitment Automation Platform",
     description:
-      "Multi-tenant e-commerce backend with real-time inventory, Stripe billing, and an admin analytics suite.",
-    tags: ["Next.js", "Node.js", "PostgreSQL", "Redis"],
-    href: "#",
-    year: "2025",
+      "Developed scalable recruitment workflows, automation systems, and optimized APIs for hiring operations. Implemented advanced filtering, workflow automation, and high-performance frontend modules for end-to-end hiring.",
+    tags: ["Next.js", "NestJS", "MongoDB", "PostgreSQL", "AWS"],
+    year: "2024 — Present",
   },
   {
-    title: "Pulse Observability Dashboard",
+    title: "Crypto Data Processing System",
     description:
-      "Unified monitoring UI for microservices with custom alert rules, log search, and team-based RBAC.",
-    tags: ["React", "GraphQL", "TimescaleDB", "AWS"],
-    href: "#",
-    year: "2024",
-  },
-  {
-    title: "Flowdesk Team Workspace",
-    description:
-      "Collaborative project hub with kanban boards, async comments, and calendar integrations for remote teams.",
-    tags: ["TypeScript", "Prisma", "WebSockets", "Tailwind"],
-    href: "#",
-    year: "2024",
-  },
-  {
-    title: "Nimbus Auth SDK",
-    description:
-      "Open-source authentication kit with OAuth providers, session refresh, and framework adapters for React and Express.",
-    tags: ["TypeScript", "OAuth", "Security", "DX"],
-    href: "#",
-    year: "2023",
+      "Built automated cron pipelines for processing large-scale crypto datasets with optimized MongoDB operations. Designed fault-tolerant background jobs persisting millions of records with caching and pagination strategies.",
+    tags: ["NestJS", "MongoDB", "AWS", "Cron Jobs", "REST APIs"],
+    year: "2021 — 2024",
   },
 ] as const;

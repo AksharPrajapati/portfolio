@@ -8,10 +8,12 @@
   --border: #e4e4e7;
   --card: #ffffff;
   --card-foreground: #18181b;
-  --accent: #0284c7;
-  --accent-foreground: #e0f2fe;
-  --ring: #0284c7;
+  --accent: #d97706;
+  --accent-secondary: #ea580c;
+  --accent-foreground: #0a0a0a;
+  --ring: #d97706;
   --surface: #f4f4f5;
+  --accent-glow: rgba(217, 119, 6, 0.35);
 }
 
 .dark {
@@ -22,10 +24,12 @@
   --border: #27272a;
   --card: #111113;
   --card-foreground: #f4f4f5;
-  --accent: #38bdf8;
-  --accent-foreground: #0c4a6e;
-  --ring: #38bdf8;
+  --accent: #fbbf24;
+  --accent-secondary: #f97316;
+  --accent-foreground: #0a0a0a;
+  --ring: #fbbf24;
   --surface: #0a0a0c;
+  --accent-glow: rgba(251, 191, 36, 0.35);
 }
 
 @theme inline {
@@ -37,6 +41,7 @@
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-accent: var(--accent);
+  --color-accent-secondary: var(--accent-secondary);
   --color-accent-foreground: var(--accent-foreground);
   --color-ring: var(--ring);
   --color-surface: var(--surface);
@@ -121,4 +126,38 @@ body {
 :focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
+}
+
+/* Shared accent utilities — use instead of hardcoded amber/sky classes */
+.text-gradient {
+  background: linear-gradient(
+    to right,
+    var(--accent),
+    var(--accent-secondary)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.bg-accent-gradient {
+  background: linear-gradient(
+    to right,
+    var(--accent),
+    var(--accent-secondary)
+  );
+}
+
+.shadow-accent-glow {
+  box-shadow: 0 0 40px var(--accent-glow);
+}
+
+.shadow-accent-glow-lg {
+  box-shadow: 0 0 60px color-mix(in oklab, var(--accent) 50%, transparent);
+}
+
+.glass-card {
+  border: 1px solid color-mix(in oklab, var(--foreground) 6%, transparent);
+  background: color-mix(in oklab, var(--card) 55%, transparent);
+  backdrop-filter: blur(16px);
 }

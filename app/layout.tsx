@@ -1,4 +1,5 @@
 import { Navbar } from "../components/layout/navbar";
+import { HashCleanup } from "../components/providers/hash-cleanup";
 import { ThemeProvider } from "../components/providers/theme-provider";
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
@@ -18,11 +19,11 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Senior Fullstack Engineer | Portfolio",
-    template: "%s | Portfolio",
+    default: "Akshar Prajapati | Senior Software Engineer",
+    template: "%s | Akshar Prajapati",
   },
   description:
-    "Portfolio showcasing fullstack engineering — APIs, systems, and polished product interfaces.",
+    "Portfolio of Akshar Prajapati — senior software engineer (MERN) building recruitment platforms, APIs, and cloud-backed web systems.",
 };
 
 export default function RootLayout({
@@ -38,6 +39,7 @@ export default function RootLayout({
     >
       <body className="min-h-full bg-background font-sans text-foreground antialiased">
         <ThemeProvider>
+          <HashCleanup />
           <Navbar />
           <main>{children}</main>
         </ThemeProvider>

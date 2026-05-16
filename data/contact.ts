@@ -1,8 +1,11 @@
+import { siteConfig } from "./site";
+
 export const contactContent = {
-  eyebrow: "Contact",
-  title: "Let's build something together",
+  titleLine1: "Let's build something",
+  titleLine2: "together",
   description:
-    "Open to full-time, contract, and consulting opportunities. Share a bit about your project and I'll get back within 2 business days.",
-  email: "hello@example.com",
-  availability: "Available for new projects from June 2026",
+    "Got a project in mind or just want to chat? I'm always open to discussing new opportunities and creative ideas.",
+  ctaLabel: "Say Hello",
+  email: "aksharpp369@gmail.com",
+  phone: siteConfig.phone,
 } as const;

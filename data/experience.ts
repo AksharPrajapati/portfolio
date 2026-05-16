@@ -1,45 +1,63 @@
 export const experienceContent = {
-  eyebrow: "Experience",
-  title: "Where I've contributed",
-  description:
-    "Roles where I led delivery across the stack — from architecture decisions to production support.",
+  title: "Experience",
+  subtitle: "Where I've worked and what I've built.",
 } as const;
 
 export const experiences = [
   {
-    company: "Northline Labs",
-    role: "Senior Fullstack Engineer",
-    period: "2023 — Present",
-    location: "Remote",
-    summary:
-      "Led rebuild of the core product dashboard, cutting initial load time by 42% and improving release cadence with a modular monorepo.",
-    highlights: [
-      "Designed GraphQL API layer and caching strategy serving 120k+ daily active users.",
-      "Mentored three engineers on React performance patterns and testing practices.",
+    company: "Growexx",
+    role: "Senior Software Engineer (MERN L2)",
+    period: "Nov 2024 — Present",
+    location: "Ahmedabad, India",
+    description:
+      "Core member of HIRIN, a recruitment automation platform streamlining end-to-end hiring workflows. Delivered 15+ production-grade features across frontend and backend using Next.js and NestJS, designed 25+ REST APIs for complex workflows and integrations, and improved API response times up to 3x through query optimization, indexing, and caching. Integrated AWS, CDN, and image optimization, reducing frontend asset load times by nearly 40%.",
+    tech: [
+      "Next.js",
+      "NestJS",
+      "TypeScript",
+      "MongoDB",
+      "PostgreSQL",
+      "AWS",
+      "REST APIs",
     ],
+    current: true,
   },
   {
-    company: "Brightstack",
-    role: "Fullstack Engineer",
-    period: "2021 — 2023",
-    location: "San Francisco, CA",
-    summary:
-      "Owned checkout and subscription flows for a B2B SaaS platform, integrating billing webhooks and usage-based pricing.",
-    highlights: [
-      "Shipped Stripe-based billing with proration and self-serve plan upgrades.",
-      "Introduced CI pipelines that reduced deployment failures by 30%.",
+    company: "Redsoft Solutions Pvt. Ltd.",
+    role: "Full Stack Developer",
+    period: "Nov 2021 — Nov 2024",
+    location: "Surat, India",
+    description:
+      "Owned backend architecture and contributed to frontend systems using NestJS, Next.js, and Vite across multiple production apps. Built automated cron pipelines processing large-scale crypto datasets into MongoDB, engineered 40+ scalable REST APIs with caching and pagination (cutting average execution time by ~60%), and managed AWS EC2, S3, CloudFront, SSL, and Nginx deployments.",
+    tech: [
+      "NestJS",
+      "Next.js",
+      "Vite",
+      "MongoDB",
+      "AWS",
+      "Cron Jobs",
+      "Nginx",
     ],
+    current: false,
   },
   {
-    company: "Pixel & Code Agency",
-    role: "Frontend Engineer",
-    period: "2019 — 2021",
-    location: "Remote",
-    summary:
-      "Delivered marketing sites and product prototypes for agency clients with animation-heavy, accessible interfaces.",
-    highlights: [
-      "Built reusable component libraries that cut project kickoff time in half.",
-      "Collaborated with designers to ship 15+ client launches on schedule.",
-    ],
+    company: "Loopnix",
+    role: "Frontend Developer",
+    period: "Jan 2021 — Nov 2021",
+    location: "Surat, India",
+    description:
+      "Built scalable React applications with reusable components and Redux. Worked with Next.js, Gatsby, GraphQL, and Styled Components. Led migration from CRA to Gatsby with Kontent CMS, improving SEO and reducing initial page load time by approximately 35%.",
+    tech: ["React", "Next.js", "Gatsby", "GraphQL", "Redux", "Styled Components"],
+    current: false,
+  },
+  {
+    company: "AiGrow.me",
+    role: "React Native Developer",
+    period: "Apr 2020 — Sep 2020",
+    location: "Surat, India",
+    description:
+      "Built cross-platform mobile applications with React Native and REST API integrations. Delivered optimized, responsive experiences on Android and iOS with reusable UI architecture.",
+    tech: ["React Native", "REST APIs", "JavaScript", "Mobile UI"],
+    current: false,
   },
 ] as const;
