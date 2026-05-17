@@ -25,7 +25,7 @@ export const aboutContent = {
   },
   location: {
     place: siteConfig.location,
-    note: "Available for remote work",
+    note: "Open to full-time remote & onsite opportunities",
   },
   techStack: {
     label: "Tech Stack",
@@ -34,14 +34,14 @@ export const aboutContent = {
       { name: "Next.js", icon: `${DEVICON}/nextjs/nextjs-original.svg` },
       { name: "TypeScript", icon: `${DEVICON}/typescript/typescript-original.svg` },
       { name: "Node.js", icon: `${DEVICON}/nodejs/nodejs-original.svg` },
-      { name: "NestJS", icon: `${DEVICON}/nestjs/nestjs-plain.svg` },
+      { name: "NestJS", icon: `${DEVICON}/nestjs/nestjs-original.svg` },
       { name: "MongoDB", icon: `${DEVICON}/mongodb/mongodb-original.svg` },
       { name: "PostgreSQL", icon: `${DEVICON}/postgresql/postgresql-original.svg` },
       { name: "AWS", icon: `${DEVICON}/amazonwebservices/amazonwebservices-original-wordmark.svg` },
       { name: "Docker", icon: `${DEVICON}/docker/docker-original.svg` },
       { name: "GraphQL", icon: `${DEVICON}/graphql/graphql-plain.svg` },
       { name: "Redis", icon: `${DEVICON}/redis/redis-original.svg` },
-      { name: "Tailwind", icon: `${DEVICON}/tailwindcss/tailwindcss-plain.svg` },
+      { name: "Tailwind", icon: `${DEVICON}/tailwindcss/tailwindcss-original.svg` },
     ],
   },
 } as const;

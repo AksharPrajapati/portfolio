@@ -10,9 +10,9 @@ export const siteConfig = {
   phone: "+91 8980697242",
   url: "https://example.com",
   links: {
-    linkedin: "https://www.linkedin.com/in/akshar-prajapati",
+    linkedin: "https://www.linkedin.com/in/akshar-prajapati-a23b04164/",
     email: "mailto:aksharpp369@gmail.com",
-    resume: "/resume.pdf",
+    resume: "https://drive.google.com/file/d/1nQrJprBDckMcEZhyFir3XFaxDWh_imt_/view?usp=sharing",
   },
 } as const;
 

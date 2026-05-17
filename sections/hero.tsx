@@ -265,12 +265,12 @@ export function HeroSection() {
             })}
           </motion.div>
 
-          <motion.div variants={fadeUp} transition={itemTransition}>
+          {/* <motion.div variants={fadeUp} transition={itemTransition}>
             <HeroSocialLinks />
-          </motion.div>
+          </motion.div> */}
         </motion.div>
 
-        <motion.div
+        {/* <motion.div
           className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 md:flex"
           initial={reduceMotion ? false : { opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
@@ -283,7 +283,7 @@ export function HeroSection() {
           >
             <ArrowDown className="size-5" />
           </SectionNavLink>
-        </motion.div>
+        </motion.div> */}
       </Container>
     </section>
   );
