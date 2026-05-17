@@ -13,7 +13,7 @@ export function ContactSection() {
   return (
     <Section
       id="contact"
-      className="scroll-mt-28 border-t border-border/40 bg-surface/20"
+      className="scroll-mt-28"
     >
       <Container className="max-w-3xl text-center">
         <motion.div

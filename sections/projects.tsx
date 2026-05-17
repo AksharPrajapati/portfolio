@@ -12,7 +12,7 @@ export function ProjectsSection() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <Section id="work" className="scroll-mt-28 border-t border-border/40 bg-surface/20">
+    <Section id="work" className="scroll-mt-28">
       <Container>
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 24 }}

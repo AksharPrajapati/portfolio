@@ -13,7 +13,7 @@ export function ExperienceSection() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <Section id="experience" className="scroll-mt-28 border-t border-border/40">
+    <Section id="experience" className="scroll-mt-28">
       <Container className="max-w-4xl">
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 24 }}

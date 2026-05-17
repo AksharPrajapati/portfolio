@@ -8,11 +8,13 @@ export const siteConfig = {
     "Portfolio of Akshar Prajapati — senior software engineer specializing in MERN stack, recruitment platforms, and production-grade web systems.",
   location: "Ahmedabad, India",
   phone: "+91 8980697242",
+  profileImage: "/profile.png",
   url: "https://example.com",
   links: {
     linkedin: "https://www.linkedin.com/in/akshar-prajapati-a23b04164/",
     email: "mailto:aksharpp369@gmail.com",
     resume: "https://drive.google.com/file/d/1nQrJprBDckMcEZhyFir3XFaxDWh_imt_/view?usp=sharing",
+    github: "https://github.com/AksharPrajapati",
   },
 } as const;
 
@@ -29,6 +31,12 @@ export const navSocials = [
     href: siteConfig.links.linkedin,
     label: "LinkedIn",
     icon: "linkedin" as const,
+    external: true,
+  },
+  {
+    href: siteConfig.links.github,
+    label: "GitHub",
+    icon: "github" as const,
     external: true,
   },
   {
@@ -74,6 +82,12 @@ export const heroContent = {
       href: siteConfig.links.linkedin,
       label: "LinkedIn profile",
       icon: "linkedin" as const,
+    },
+    {
+      href: siteConfig.links.github,
+      label: "GitHub profile",
+      icon: "github" as const,
+      external: true,
     },
     {
       href: siteConfig.links.email,

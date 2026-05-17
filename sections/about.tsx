@@ -28,7 +28,7 @@ export function AboutSection() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <Section id="about" className="scroll-mt-28 border-t border-border/40">
+    <Section id="about" className="scroll-mt-28">
       <Container>
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 24 }}
@@ -55,6 +55,7 @@ export function AboutSection() {
         >
           {/* Journey — wide */}
           <AboutCard className="md:col-span-2">
+            <div className="relative z-10">
             <AboutCardLabel icon={<Sparkles className="size-[18px]" />}>
               {aboutContent.journey.label}
             </AboutCardLabel>
@@ -68,12 +69,14 @@ export function AboutSection() {
             <p className="mt-4 text-sm font-light leading-relaxed text-muted sm:text-base">
               {aboutContent.journey.paragraphs[1].text}
             </p>
+            </div>
           </AboutCard>
 
           {/* Years */}
-          <AboutCard className="flex flex-col items-center justify-center">
+          <AboutCard className="flex min-h-[220px] flex-col items-center justify-center">
             <Clock
-              className="pointer-events-none absolute -right-4 -bottom-4 size-32 -rotate-12 text-foreground/[0.04] transition-colors duration-500 group-hover:text-accent/10"
+              className="pointer-events-none absolute -right-2 -bottom-2 size-[7.5rem] -rotate-12 text-foreground/[0.05] transition-colors duration-500 group-hover:text-accent/[0.08]"
+              strokeWidth={2}
               aria-hidden
             />
             <div className="relative z-10 text-center">
@@ -89,6 +92,7 @@ export function AboutSection() {
 
           {/* Tech stack — wide */}
           <AboutCard className="md:col-span-2">
+            <div className="relative z-10">
             <AboutCardLabel icon={<Code2 className="size-[18px]" />}>
               {aboutContent.techStack.label}
             </AboutCardLabel>
@@ -116,12 +120,14 @@ export function AboutSection() {
                 </li>
               ))}
             </ul>
+            </div>
           </AboutCard>
 
           {/* Location */}
-          <AboutCard className="flex flex-col items-center justify-center">
+          <AboutCard className="flex min-h-[220px] flex-col items-center justify-center">
             <Globe
-              className="pointer-events-none absolute -right-6 -bottom-6 size-36 rotate-12 text-foreground/[0.04] transition-colors duration-500 group-hover:text-accent/10"
+              className="pointer-events-none absolute -right-2 -bottom-2 size-[8.5rem] rotate-12 text-foreground/[0.05] transition-colors duration-500 group-hover:text-accent/[0.08]"
+              strokeWidth={2}
               aria-hidden
             />
             <div className="relative z-10 text-center">

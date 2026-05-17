@@ -33,7 +33,7 @@ export function AboutCard({ children, className, ...props }: AboutCardProps) {
         aria-hidden
         className="pointer-events-none absolute inset-0 bg-gradient-to-br from-accent/8 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
       />
-      <div className="relative z-10">{children}</div>
+      {children}
     </motion.div>
   );
 }
