@@ -251,7 +251,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 | **Phone** | +91 8980697242 |
 | **GitHub** | [github.com/AksharPrajapati](https://github.com/AksharPrajapati) |
 | **LinkedIn** | [linkedin.com/in/akshar-prajapati-a23b04164](https://www.linkedin.com/in/akshar-prajapati-a23b04164/) |
-| **Portfolio** | [https://your-portfolio-url.vercel.app](https://your-portfolio-url.vercel.app) *(replace when deployed)* |
+| **Portfolio** | [https://portfolio-rouge-theta-39.vercel.app](https://portfolio-rouge-theta-39.vercel.app) |
 
 ---
 
