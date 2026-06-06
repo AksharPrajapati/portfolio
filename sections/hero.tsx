@@ -2,29 +2,100 @@
 
 import { HeroProfileOrbit } from "../components/hero/hero-profile-orbit";
 import { ButtonLink } from "../components/ui/button";
+import { MagneticWrapper } from "../components/ui/magnetic-wrapper";
 import { SectionNavLink } from "../components/ui/section-nav-link";
 import { Container } from "../components/ui/container";
 import { Text } from "../components/ui/typography";
 import { heroContent, siteConfig } from "../data/site";
 import { cn } from "../lib/utils";
-import { motion, useReducedMotion } from "framer-motion";
-import { ArrowDown, Download } from "lucide-react";
-import { useEffect, useState } from "react";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
+import { Download } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1, delayChildren: 0.05 },
-  },
-};
+// M-8: Scroll mouse hint replaces the overused bounce arrow
+function ScrollMouseHint() {
+  const reduceMotion = useReducedMotion();
+  return (
+    <SectionNavLink
+      sectionId="about"
+      className="group flex flex-col items-center gap-2 text-muted-foreground/50 transition-colors hover:text-accent"
+      aria-label="Scroll to about section"
+    >
+      <svg
+        width="22"
+        height="34"
+        viewBox="0 0 22 34"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden
+      >
+        <rect
+          x="1"
+          y="1"
+          width="20"
+          height="32"
+          rx="10"
+          stroke="currentColor"
+          strokeWidth="1.5"
+        />
+        {!reduceMotion ? (
+          <motion.rect
+            x="9.5"
+            y="6"
+            width="3"
+            height="7"
+            rx="1.5"
+            fill="currentColor"
+            animate={{ y: [6, 13, 6], opacity: [1, 0.2, 1] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          />
+        ) : (
+          <rect x="9.5" y="6" width="3" height="7" rx="1.5" fill="currentColor" />
+        )}
+      </svg>
+      <span className="text-[10px] font-mono uppercase tracking-[0.15em] opacity-60 transition-opacity group-hover:opacity-100">
+        scroll
+      </span>
+    </SectionNavLink>
+  );
+}
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 },
-};
+// M-7 + F-5: Availability strip with "currently building" context
+function AvailabilityStrip() {
+  const reduceMotion = useReducedMotion();
+  return (
+    <motion.div
+      initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: 0.2, ease: EASE }}
+      className="mt-5 flex flex-wrap items-center justify-center gap-3 text-xs"
+    >
+      <span className="flex items-center gap-1.5 rounded-full border border-emerald-400/20 bg-emerald-400/5 px-3 py-1.5 text-emerald-400">
+        <motion.span
+          className="size-1.5 rounded-full bg-emerald-400"
+          animate={
+            reduceMotion
+              ? undefined
+              : { scale: [1, 1.3, 1], opacity: [0.7, 1, 0.7] }
+          }
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        />
+        Available for new opportunities
+      </span>
+      <span className="hidden items-center gap-1.5 font-mono text-muted-foreground sm:flex">
+        <span className="text-accent/60">›</span>
+        Currently: HIRIN @ Growexx
+      </span>
+    </motion.div>
+  );
+}
 
 function RoleTypewriter({ roles }: { roles: readonly string[] }) {
   const reduceMotion = useReducedMotion();
@@ -82,49 +153,101 @@ function RoleTypewriter({ roles }: { roles: readonly string[] }) {
 
 export function HeroSection() {
   const reduceMotion = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // M-3: Scroll-based parallax on the profile orbit
+  const { scrollY } = useScroll();
+  const orbitY = useTransform(scrollY, [0, 500], [0, -60]);
 
   const itemTransition = reduceMotion
     ? { duration: 0 }
     : { duration: 0.55, ease: EASE };
 
+  // M-2: Split heading into individual words for staggered reveal
+  const greetingWords = heroContent.greeting.split(" "); // ["Hi,", "I'm"]
+  const nameWords = siteConfig.name.split(" "); // ["Akshar", "Prajapati"]
+
   return (
     <section
+      ref={sectionRef}
       id="home"
       aria-labelledby="hero-heading"
       className="relative flex min-h-dvh items-center justify-center pt-16 md:pt-20"
     >
       <Container className="relative w-full py-16 sm:py-20">
-        <motion.div
-          className="mx-auto flex max-w-3xl flex-col items-center text-center"
-          variants={staggerContainer}
-          initial="hidden"
-          animate="visible"
-        >
-          <motion.div variants={fadeUp} transition={itemTransition}>
-            <HeroProfileOrbit
-              imageSrc={siteConfig.profileImage}
-              imageAlt={siteConfig.name}
-              className="mb-4"
-            />
+        <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
+
+          {/* Profile orbit with M-3 parallax */}
+          <motion.div
+            style={reduceMotion ? undefined : { y: orbitY }}
+            className="flex flex-col items-center"
+          >
+            <motion.div
+              initial={reduceMotion ? false : { opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, ease: EASE }}
+            >
+              <HeroProfileOrbit
+                imageSrc={siteConfig.profileImage}
+                imageAlt={siteConfig.name}
+                className="mb-0"
+              />
+            </motion.div>
+
+            {/* M-7 + F-5: Availability strip */}
+            {/* <AvailabilityStrip /> */}
           </motion.div>
 
-          <motion.h1
+          {/* M-2: Word-by-word h1 reveal */}
+          <h1
             id="hero-heading"
-            variants={fadeUp}
-            transition={itemTransition}
             className="mt-6 text-balance text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl"
           >
-            <span className="text-foreground">{heroContent.greeting} </span>
-            <span className="text-gradient">{siteConfig.name}</span>
-          </motion.h1>
+            {greetingWords.map((word, i) => (
+              <motion.span
+                key={`g-${i}`}
+                className="inline-block text-foreground"
+                initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.5,
+                  delay: 0.05 + i * 0.08,
+                  ease: EASE,
+                }}
+              >
+                {word}&nbsp;
+              </motion.span>
+            ))}
+            {nameWords.map((word, i) => (
+              <motion.span
+                key={`n-${i}`}
+                className="inline-block text-gradient"
+                initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.5,
+                  delay: 0.05 + (greetingWords.length + i) * 0.08,
+                  ease: EASE,
+                }}
+              >
+                {word}
+                {i < nameWords.length - 1 ? " " : ""}
+              </motion.span>
+            ))}
+          </h1>
 
-          <motion.div variants={fadeUp} transition={itemTransition}>
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ ...itemTransition, delay: 0.55 }}
+          >
             <RoleTypewriter roles={heroContent.roles} />
           </motion.div>
 
           <motion.div
-            variants={fadeUp}
-            transition={itemTransition}
+            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ ...itemTransition, delay: 0.7 }}
             className="mt-6 max-w-xl"
           >
             <Text variant="body-lg" className="text-muted text-pretty" as="p">
@@ -132,9 +255,11 @@ export function HeroSection() {
             </Text>
           </motion.div>
 
+          {/* M-1: CTA buttons with magnetic wrapper */}
           <motion.div
-            variants={fadeUp}
-            transition={itemTransition}
+            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ ...itemTransition, delay: 0.85 }}
             className="mt-10 flex w-full max-w-md flex-col gap-3 sm:max-w-none sm:flex-row sm:justify-center"
           >
             {heroContent.ctas.map((cta) => {
@@ -146,48 +271,49 @@ export function HeroSection() {
                   "glass-card border-border/80 hover:border-accent/30",
               );
 
-              if ("sectionId" in cta) {
-                return (
+              const button =
+                "sectionId" in cta ? (
                   <SectionNavLink
                     key={cta.label}
                     sectionId={cta.sectionId}
                     className={buttonClass}
                   >
                     {cta.label}
-                    <ArrowDown className="size-4 transition-transform group-hover:translate-y-0.5" />
                   </SectionNavLink>
+                ) : (
+                  <ButtonLink
+                    key={cta.label}
+                    href={cta.href}
+                    variant={cta.variant}
+                    external={cta.external}
+                    className={buttonClass}
+                  >
+                    {cta.label}
+                    <Download className="size-4" />
+                  </ButtonLink>
                 );
-              }
 
               return (
-                <ButtonLink
+                <MagneticWrapper
                   key={cta.label}
-                  href={cta.href}
-                  variant={cta.variant}
-                  external={cta.external}
-                  className={buttonClass}
+                  className="w-full sm:w-auto"
+                  strength={0.25}
                 >
-                  {cta.label}
-                  <Download className="size-4" />
-                </ButtonLink>
+                  {button}
+                </MagneticWrapper>
               );
             })}
           </motion.div>
-        </motion.div>
+        </div>
 
+        {/* M-8: Scroll mouse hint (visible sm+, fixes B-8) */}
         <motion.div
-          className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 md:flex"
+          className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 sm:flex"
           initial={reduceMotion ? false : { opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1, duration: 0.45, ease: EASE }}
+          transition={{ delay: 1.2, duration: 0.45, ease: EASE }}
         >
-          <SectionNavLink
-            sectionId="about"
-            className="text-muted transition-colors hover:text-accent"
-            aria-label="Scroll to about section"
-          >
-            <ArrowDown className="size-5 animate-bounce" />
-          </SectionNavLink>
+          {/* <ScrollMouseHint /> */}
         </motion.div>
       </Container>
     </section>

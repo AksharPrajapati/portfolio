@@ -9,7 +9,7 @@ export const siteConfig = {
   location: "Ahmedabad, India",
   phone: "+91 8980697242",
   profileImage: "/profile.png",
-  url: "https://example.com",
+  url: "https://aksharprajapati.vercel.app", // TODO: update to real deployed URL
   links: {
     linkedin: "https://www.linkedin.com/in/akshar-prajapati-a23b04164/",
     email: "mailto:aksharpp369@gmail.com",

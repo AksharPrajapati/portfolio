@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://aksharprajapati.vercel.app/sitemap.xml

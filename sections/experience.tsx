@@ -28,9 +28,13 @@ export function ExperienceSection() {
         </motion.div>
 
         <div ref={timelineRef} className="relative">
-          <div
+          {/* M-9: Animated timeline line that draws from top to bottom on scroll enter */}
+          <motion.div
             aria-hidden
-            className="absolute top-0 bottom-0 left-4 w-px bg-gradient-to-b from-accent/50 via-accent/20 to-accent/10 md:left-8"
+            className="absolute bottom-0 left-4 top-0 w-px origin-top bg-gradient-to-b from-accent/50 via-accent/20 to-accent/10 md:left-8"
+            initial={reduceMotion ? false : { scaleY: 0 }}
+            animate={isInView ? { scaleY: 1 } : { scaleY: 0 }}
+            transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
           />
 
           <ol className="space-y-8">

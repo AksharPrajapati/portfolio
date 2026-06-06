@@ -2,6 +2,7 @@
 
 import { SocialIcon } from "../icons/social-icons";
 import { SectionNavLink } from "../ui/section-nav-link";
+import { ThemeToggle } from "../ui/theme-toggle";
 import { Container } from "../ui/container";
 import { navLinks, navSocials, sectionIds, siteConfig } from "../../data/site";
 import { useActiveSection } from "../../lib/hooks/use-active-section";
@@ -97,7 +98,7 @@ export function Navbar() {
 
               <span aria-hidden className="mx-1.5 h-5 w-px bg-border/80" />
 
-              <ul className="flex items-center gap-1 pr-0.5">
+              <ul className="flex items-center gap-1">
                 {navSocials.map((social) => (
                   <li key={social.href}>
                     <a
@@ -120,19 +121,26 @@ export function Navbar() {
                   </li>
                 ))}
               </ul>
+
+              <span aria-hidden className="mx-1 h-5 w-px bg-border/80" />
+
+              <ThemeToggle />
             </div>
           </nav>
 
-          <button
-            type="button"
-            className="inline-flex size-10 items-center justify-center rounded-full border border-border/70 bg-card/50 text-foreground backdrop-blur-md transition-colors hover:bg-card lg:hidden"
-            aria-expanded={open}
-            aria-controls="mobile-menu"
-            aria-label={open ? "Close menu" : "Open menu"}
-            onClick={() => setOpen((prev) => !prev)}
-          >
-            {open ? <X className="size-5" /> : <Menu className="size-5" />}
-          </button>
+          <div className="flex items-center gap-2 lg:hidden">
+            <ThemeToggle />
+            <button
+              type="button"
+              className="inline-flex size-10 items-center justify-center rounded-full border border-border/70 bg-card/50 text-foreground backdrop-blur-md transition-colors hover:bg-card"
+              aria-expanded={open}
+              aria-controls="mobile-menu"
+              aria-label={open ? "Close menu" : "Open menu"}
+              onClick={() => setOpen((prev) => !prev)}
+            >
+              {open ? <X className="size-5" /> : <Menu className="size-5" />}
+            </button>
+          </div>
         </div>
       </Container>
 

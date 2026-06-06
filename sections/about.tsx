@@ -51,31 +51,34 @@ export function AboutSection() {
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
-          className="grid auto-rows-[minmax(180px,auto)] grid-cols-1 gap-4 md:grid-cols-3"
+          className="grid auto-rows-[minmax(180px,auto)] grid-cols-1 gap-4 md:grid-cols-[2fr_1fr]"
         >
-          {/* Journey — wide */}
-          <AboutCard className="md:col-span-2">
+          {/* Journey — wide, slides from left (M-6) */}
+          <AboutCard slideFrom="left">
             <div className="relative z-10">
-            <AboutCardLabel icon={<Sparkles className="size-[18px]" />}>
-              {aboutContent.journey.label}
-            </AboutCardLabel>
-            <p className="text-base font-light leading-relaxed text-foreground/85 sm:text-lg">
-              {aboutContent.journey.paragraphs[0].text}
-              <span className="font-medium text-foreground">
-                {aboutContent.journey.paragraphs[0].highlight}
-              </span>
-              {aboutContent.journey.paragraphs[0].rest}
-            </p>
-            <p className="mt-4 text-sm font-light leading-relaxed text-muted sm:text-base">
-              {aboutContent.journey.paragraphs[1].text}
-            </p>
+              <AboutCardLabel icon={<Sparkles className="size-[18px]" />}>
+                {aboutContent.journey.label}
+              </AboutCardLabel>
+              <p className="text-base font-light leading-relaxed text-foreground/85 sm:text-lg">
+                {aboutContent.journey.paragraphs[0].text}
+                <span className="font-medium text-foreground">
+                  {aboutContent.journey.paragraphs[0].highlight}
+                </span>
+                {aboutContent.journey.paragraphs[0].rest}
+              </p>
+              <p className="mt-4 text-sm font-light leading-relaxed text-muted sm:text-base">
+                {aboutContent.journey.paragraphs[1].text}
+              </p>
             </div>
           </AboutCard>
 
-          {/* Years */}
-          <AboutCard className="flex min-h-[220px] flex-col items-center justify-center">
+          {/* Years — slides from right (M-6) */}
+          <AboutCard
+            className="flex min-h-[220px] flex-col items-center justify-center"
+            slideFrom="right"
+          >
             <Clock
-              className="pointer-events-none absolute -right-2 -bottom-2 size-[7.5rem] -rotate-12 text-foreground/[0.05] transition-colors duration-500 group-hover:text-accent/[0.08]"
+              className="pointer-events-none absolute -bottom-2 -right-2 size-[7.5rem] -rotate-12 text-foreground/[0.05] transition-colors duration-500 group-hover:text-accent/[0.08]"
               strokeWidth={2}
               aria-hidden
             />
@@ -90,43 +93,48 @@ export function AboutSection() {
             </div>
           </AboutCard>
 
-          {/* Tech stack — wide */}
-          <AboutCard className="md:col-span-2">
+          {/* Tech stack — wide, slides from left (M-6) */}
+          <AboutCard slideFrom="left">
             <div className="relative z-10">
-            <AboutCardLabel icon={<Code2 className="size-[18px]" />}>
-              {aboutContent.techStack.label}
-            </AboutCardLabel>
-            <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-              {aboutContent.techStack.items.map((tech) => (
-                <li key={tech.name}>
-                  <motion.div
-                    whileHover={reduceMotion ? undefined : { scale: 1.03, y: -2 }}
-                    whileTap={reduceMotion ? undefined : { scale: 0.98 }}
-                    className="flex cursor-default items-center gap-2.5 rounded-xl border border-white/[0.06] bg-white/[0.03] px-3 py-2.5 transition-colors duration-300 hover:border-accent/25 hover:bg-white/[0.05] sm:px-4 sm:py-3"
-                  >
-                    <span className="relative flex size-5 shrink-0 items-center justify-center">
-                      <Image
-                        src={tech.icon}
-                        alt={`${tech.name} logo`}
-                        width={20}
-                        height={20}
-                        className="size-5 object-contain"
-                      />
-                    </span>
-                    <span className="text-sm font-medium text-foreground/75">
-                      {tech.name}
-                    </span>
-                  </motion.div>
-                </li>
-              ))}
-            </ul>
+              <AboutCardLabel icon={<Code2 className="size-[18px]" />}>
+                {aboutContent.techStack.label}
+              </AboutCardLabel>
+              <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+                {aboutContent.techStack.items.map((tech) => (
+                  <li key={tech.name}>
+                    <motion.div
+                      whileHover={
+                        reduceMotion ? undefined : { scale: 1.03, y: -2 }
+                      }
+                      whileTap={reduceMotion ? undefined : { scale: 0.98 }}
+                      className="flex cursor-default items-center gap-2.5 rounded-xl border border-white/[0.06] bg-white/[0.03] px-3 py-2.5 transition-colors duration-300 hover:border-accent/25 hover:bg-white/[0.05] sm:px-4 sm:py-3"
+                    >
+                      <span className="relative flex size-5 shrink-0 items-center justify-center">
+                        <Image
+                          src={tech.icon}
+                          alt={`${tech.name} logo`}
+                          width={20}
+                          height={20}
+                          className="size-5 object-contain"
+                        />
+                      </span>
+                      <span className="text-sm font-medium text-foreground/75">
+                        {tech.name}
+                      </span>
+                    </motion.div>
+                  </li>
+                ))}
+              </ul>
             </div>
           </AboutCard>
 
-          {/* Location */}
-          <AboutCard className="flex min-h-[220px] flex-col items-center justify-center">
+          {/* Location — slides from right (M-6) */}
+          <AboutCard
+            className="flex min-h-[220px] flex-col items-center justify-center"
+            slideFrom="right"
+          >
             <Globe
-              className="pointer-events-none absolute -right-2 -bottom-2 size-[8.5rem] rotate-12 text-foreground/[0.05] transition-colors duration-500 group-hover:text-accent/[0.08]"
+              className="pointer-events-none absolute -bottom-2 -right-2 size-[8.5rem] rotate-12 text-foreground/[0.05] transition-colors duration-500 group-hover:text-accent/[0.08]"
               strokeWidth={2}
               aria-hidden
             />

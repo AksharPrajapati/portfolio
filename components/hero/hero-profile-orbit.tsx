@@ -4,7 +4,7 @@ import { siteConfig } from "../../data/site";
 import { cn } from "../../lib/utils";
 import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
-import { useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 
 type HeroProfileOrbitProps = {
   imageSrc?: string;
@@ -19,23 +19,23 @@ function OrbitRing({
   reverse,
   borderClass,
   children,
-  reduceMotion,
+  shouldAnimate,
 }: {
   inset: string;
   duration: number;
   reverse?: boolean;
   borderClass: string;
   children?: ReactNode;
-  reduceMotion: boolean | null;
+  shouldAnimate: boolean;
 }) {
   return (
     <motion.div
       className={cn("absolute rounded-full", inset, borderClass)}
-      animate={reduceMotion ? undefined : { rotate: reverse ? -360 : 360 }}
+      animate={shouldAnimate ? { rotate: reverse ? -360 : 360 } : undefined}
       transition={
-        reduceMotion
-          ? undefined
-          : { repeat: Infinity, duration, ease: "linear" }
+        shouldAnimate
+          ? { repeat: Infinity, duration, ease: "linear" }
+          : undefined
       }
     >
       {children}
@@ -51,6 +51,20 @@ export function HeroProfileOrbit({
 }: HeroProfileOrbitProps) {
   const reduceMotion = useReducedMotion();
   const [hovered, setHovered] = useState(false);
+  const [isDocumentVisible, setIsDocumentVisible] = useState(true);
+
+  // P-5: Pause animations when tab is hidden
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      setIsDocumentVisible(!document.hidden);
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
+
+  const shouldAnimate = !reduceMotion && isDocumentVisible;
 
   const initials = useMemo(
     () =>
@@ -92,14 +106,18 @@ export function HeroProfileOrbit({
         aria-hidden
         className="absolute -inset-6 rounded-full bg-accent-gradient opacity-30 blur-2xl"
         animate={
-          reduceMotion
-            ? undefined
-            : { opacity: hovered ? [0.35, 0.55, 0.35] : [0.22, 0.38, 0.22] }
+          shouldAnimate
+            ? { opacity: hovered ? [0.35, 0.55, 0.35] : [0.22, 0.38, 0.22] }
+            : undefined
         }
         transition={
-          reduceMotion
-            ? undefined
-            : { duration: hovered ? 2.5 : 5, repeat: Infinity, ease: "easeInOut" }
+          shouldAnimate
+            ? {
+                duration: hovered ? 2.5 : 5,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }
+            : undefined
         }
       />
 
@@ -108,7 +126,7 @@ export function HeroProfileOrbit({
         inset="-inset-3"
         duration={22}
         borderClass="border border-accent/25"
-        reduceMotion={reduceMotion}
+        shouldAnimate={shouldAnimate}
       >
         <span className="absolute left-1/2 top-0 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent shadow-[0_0_12px] shadow-accent/80" />
         <span className="absolute bottom-0 left-1/2 size-1.5 -translate-x-1/2 translate-y-1/2 rounded-full bg-accent-secondary/70 shadow-[0_0_8px] shadow-accent/50" />
@@ -119,7 +137,7 @@ export function HeroProfileOrbit({
         duration={32}
         reverse
         borderClass="border border-white/[0.06]"
-        reduceMotion={reduceMotion}
+        shouldAnimate={shouldAnimate}
       >
         <span className="absolute right-0 top-1/2 size-1.5 -translate-y-1/2 translate-x-1/2 rounded-full bg-accent/50" />
         <span className="absolute left-0 top-1/2 size-1 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent-secondary/40" />
@@ -129,15 +147,21 @@ export function HeroProfileOrbit({
         inset="-inset-9"
         duration={40}
         borderClass="border border-dashed border-accent/10"
-        reduceMotion={reduceMotion}
+        shouldAnimate={shouldAnimate}
       />
 
       {/* Floating particles */}
-      {!reduceMotion
+      {shouldAnimate
         ? [
             { className: "left-[8%] top-[18%] size-1 bg-accent/60", delay: 0 },
-            { className: "right-[12%] top-[28%] size-1.5 bg-accent-secondary/50", delay: 0.4 },
-            { className: "bottom-[20%] left-[20%] size-1 bg-accent/40", delay: 0.8 },
+            {
+              className: "right-[12%] top-[28%] size-1.5 bg-accent-secondary/50",
+              delay: 0.4,
+            },
+            {
+              className: "bottom-[20%] left-[20%] size-1 bg-accent/40",
+              delay: 0.8,
+            },
           ].map((particle) => (
             <motion.span
               key={particle.className}
@@ -168,8 +192,9 @@ export function HeroProfileOrbit({
             src={imageSrc}
             alt={imageAlt ?? siteConfig.name}
             fill
-            className="object-cover object-[center_20%] transition-transform duration-700 scale-110 group-hover:scale-100"
-            sizes="(max-width: 768px) 128px, 176px"
+            // B-3 fix: zoom IN on hover (100 → 110), P-6 fix: correct sizes
+            className="object-cover object-[center_20%] transition-transform duration-700 scale-100 group-hover:scale-110"
+            sizes="(max-width: 640px) 128px, (max-width: 768px) 160px, 176px"
             priority
           />
         ) : (
@@ -189,12 +214,14 @@ export function HeroProfileOrbit({
           aria-hidden
           className="size-2.5 rounded-full bg-emerald-400 shadow-[0_0_10px] shadow-emerald-400/80"
           animate={
-            reduceMotion ? undefined : { scale: [1, 1.2, 1], opacity: [0.7, 1, 0.7] }
+            shouldAnimate
+              ? { scale: [1, 1.2, 1], opacity: [0.7, 1, 0.7] }
+              : undefined
           }
           transition={
-            reduceMotion
-              ? undefined
-              : { duration: 2.2, repeat: Infinity, ease: "easeInOut" }
+            shouldAnimate
+              ? { duration: 2.2, repeat: Infinity, ease: "easeInOut" }
+              : undefined
           }
         />
       </div>

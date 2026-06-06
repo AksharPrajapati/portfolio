@@ -26,10 +26,7 @@ export function ProjectsSection() {
           />
         </motion.div>
 
-        <ul
-          ref={gridRef}
-          className="grid gap-5 md:grid-cols-2"
-        >
+        <ul ref={gridRef} className="grid gap-5 md:grid-cols-2">
           {projects.map((project, index) => (
             <motion.li
               key={project.title}
@@ -41,34 +38,39 @@ export function ProjectsSection() {
                 ease: [0.22, 1, 0.36, 1],
               }}
             >
-              <article className="glass-card group relative flex h-full flex-col overflow-hidden rounded-2xl p-6 transition-colors duration-500 hover:border-accent/25 md:p-8">
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                />
+              {/* M-4: gradient border wrapper */}
+              <div className="gradient-border-hover h-full rounded-2xl">
+                <article className="glass-card group relative flex h-full flex-col overflow-hidden rounded-2xl p-6 transition-colors duration-500 md:p-8">
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                  />
 
-                <div className="relative z-10">
-                  <p className="text-sm text-muted-foreground">{project.year}</p>
-                  <h3 className="mt-2 text-xl font-bold text-foreground transition-colors group-hover:text-accent">
-                    {project.title}
-                  </h3>
+                  <div className="relative z-10">
+                    <p className="text-sm text-muted-foreground">
+                      {project.year}
+                    </p>
+                    <h3 className="mt-2 text-xl font-bold text-foreground transition-colors group-hover:text-accent">
+                      {project.title}
+                    </h3>
 
-                  <p className="mt-4 flex-1 text-pretty font-light leading-relaxed text-muted">
-                    {project.description}
-                  </p>
+                    <p className="mt-4 flex-1 text-pretty font-light leading-relaxed text-muted">
+                      {project.description}
+                    </p>
 
-                  <ul className="mt-6 flex flex-wrap gap-2">
-                    {project.tags.map((tag) => (
-                      <li
-                        key={tag}
-                        className="rounded-full border border-white/[0.06] bg-white/[0.04] px-3 py-1 text-xs font-medium text-muted-foreground"
-                      >
-                        {tag}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </article>
+                    <ul className="mt-6 flex flex-wrap gap-2">
+                      {project.tags.map((tag) => (
+                        <li
+                          key={tag}
+                          className="rounded-full border border-white/[0.06] bg-white/[0.04] px-3 py-1 text-xs font-medium text-muted-foreground"
+                        >
+                          {tag}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </article>
+              </div>
             </motion.li>
           ))}
         </ul>

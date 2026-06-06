@@ -26,33 +26,32 @@ export function PageCursorBackground({
 
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_55%_at_50%_15%,color-mix(in_oklab,var(--accent)_8%,transparent),transparent_72%)]" />
 
-      {!reduceMotion ? (
+      {/* Cursor glow — zero-size anchor moved via transform (compositor thread) */}
+      {!reduceMotion && (
         <motion.div
-          className="absolute size-[min(120vw,48rem)] -translate-x-1/2 -translate-y-1/2 rounded-full"
-          style={{
-            left: x,
-            top: y,
-            opacity: isActive ? 0.45 : 0,
-            background:
-              "radial-gradient(circle, color-mix(in oklab, var(--accent) 10%, transparent) 0%, transparent 70%)",
-            filter: "blur(56px)",
-          }}
-        />
-      ) : null}
-
-      {!reduceMotion ? (
-        <motion.div
-          className="absolute size-[min(80vw,32rem)] -translate-x-1/2 -translate-y-1/2 rounded-full"
-          style={{
-            left: x,
-            top: y,
-            opacity: isActive ? 0.28 : 0,
-            background:
-              "radial-gradient(circle, color-mix(in oklab, var(--accent-secondary) 6%, transparent) 0%, transparent 75%)",
-            filter: "blur(72px)",
-          }}
-        />
-      ) : null}
+          className="absolute left-0 top-0 size-0"
+          style={{ x, y }}
+        >
+          <div
+            className="absolute left-0 top-0 -translate-x-1/2 -translate-y-1/2 size-[min(120vw,48rem)] rounded-full transition-opacity duration-500"
+            style={{
+              opacity: isActive ? 0.45 : 0,
+              background:
+                "radial-gradient(circle, color-mix(in oklab, var(--accent) 10%, transparent) 0%, transparent 70%)",
+              filter: "blur(56px)",
+            }}
+          />
+          <div
+            className="absolute left-0 top-0 -translate-x-1/2 -translate-y-1/2 size-[min(80vw,32rem)] rounded-full transition-opacity duration-500"
+            style={{
+              opacity: isActive ? 0.28 : 0,
+              background:
+                "radial-gradient(circle, color-mix(in oklab, var(--accent-secondary) 6%, transparent) 0%, transparent 75%)",
+              filter: "blur(72px)",
+            }}
+          />
+        </motion.div>
+      )}
 
       <div
         className="absolute inset-0 opacity-[0.16]"
